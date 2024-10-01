@@ -2,14 +2,26 @@ package com.example.recipeapp
 
 import android.app.Application
 import com.example.recipeapp.data.RecipeDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
+import com.google.firebase.FirebaseApp
+import com.google.firebase.firestore.FirebaseFirestore
 
 class RecipeApp : Application() {
 
-    // Create a CoroutineScope tied to the application's lifecycle
-    private val applicationScope = CoroutineScope(SupervisorJob())
+    // Lazy initialization of the local Room database
+    val database by lazy { RecipeDatabase.getDatabase(this) }
 
-    // Lazy initialization of the database using the applicationScope
-    val database by lazy { RecipeDatabase.getDatabase(this, applicationScope) }
+    // Firestore reference
+    lateinit var firestore: FirebaseFirestore
+
+    override fun onCreate() {
+        super.onCreate()
+
+        // Initialize Firebase
+        FirebaseApp.initializeApp(this)
+
+        // After ensuring Firebase is initialized, initialize Firestore
+        firestore = FirebaseFirestore.getInstance()
+    }
 }
+
+

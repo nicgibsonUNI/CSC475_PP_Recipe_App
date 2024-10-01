@@ -1,30 +1,34 @@
 package com.example.recipeapp.data
 
-import androidx.annotation.WorkerThread
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.Flow
+
 
 class RecipeRepository(private val recipeDao: RecipeDao) {
 
-    // Get all recipes
+    // Function to get all recipes from Room
     val allRecipes: Flow<List<RecipeEntity>> = recipeDao.getAllRecipes()
 
-    // Get all favorite recipes
+    // Function to get favorite recipes from Room
     val favoriteRecipes: Flow<List<RecipeEntity>> = recipeDao.getFavoriteRecipes()
 
-    // Function to insert a recipe (Room requires @WorkerThread for database operations)
-    @WorkerThread
+    // Insert a new recipe
     suspend fun insertRecipe(recipe: RecipeEntity) {
         recipeDao.insert(recipe)
     }
 
-    // Function to update a recipe (for toggling favorites)
-    @WorkerThread
+    // Update an existing recipe
     suspend fun updateRecipe(recipe: RecipeEntity) {
         recipeDao.update(recipe)
     }
 
-    // Function to get a recipe by ID
+    // Get a specific recipe by ID
     fun getRecipeById(recipeId: Int): Flow<RecipeEntity?> {
         return recipeDao.getRecipeById(recipeId)
     }
 }
+
+

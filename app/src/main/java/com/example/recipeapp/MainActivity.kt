@@ -188,22 +188,22 @@ fun RecipeDetailScreen(recipeId: Int?, recipeViewModel: RecipeViewModel, navCont
         return
     }
 
-    // Get the recipe details based on the passed recipeId
-    val recipes = recipeViewModel.allRecipes.observeAsState().value ?: emptyList()
+    // Observe recipes from the ViewModel
+    val recipes by recipeViewModel.allRecipes.observeAsState(emptyList())
 
     // Log the size of the recipes list
     Log.d("RecipeDetailScreen", "Total recipes available: ${recipes.size}")
 
-    // Find the recipe by ID
-    val recipe = recipes.find { it.id == recipeId }
+    // Trigger recipe search and log when recipes are loaded
+    LaunchedEffect(recipes) {
+        val recipe = recipes.find { it.id == recipeId }
 
-    // Log the result of the recipe search
-    if (recipe == null) {
-        Log.e("RecipeDetailScreen", "Recipe not found with ID: $recipeId")
-        Text(text = "Recipe not found or loading failed.", modifier = Modifier.padding(16.dp))
-        return
-    } else {
-        Log.d("RecipeDetailScreen", "Recipe found: ${recipe.title}")
+        // Log the result of the recipe search
+        if (recipe == null) {
+            Log.e("RecipeDetailScreen", "Recipe not found with ID: $recipeId")
+        } else {
+            Log.d("RecipeDetailScreen", "Recipe found: ${recipe.title}")
+        }
     }
 
     Scaffold(
@@ -230,63 +230,15 @@ fun RecipeDetailScreen(recipeId: Int?, recipeViewModel: RecipeViewModel, navCont
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = recipe.title,
+                text = "Recipe Detail Screen Placeholder",
                 fontSize = 24.sp,
                 color = Color.Black,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
-
-            // Recipe description
-            Text(
-                text = recipe.description,
-                fontSize = 16.sp,
-                color = Color.Gray,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-
-            // Ingredients section
-            Text(
-                text = "Ingredients",
-                fontSize = 18.sp,
-                color = Color.Black,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-            Text(
-                text = recipe.ingredients,
-                fontSize = 14.sp,
-                color = Color.DarkGray,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-
-            // Instructions section
-            Text(
-                text = "Instructions",
-                fontSize = 18.sp,
-                color = Color.Black,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-            Text(
-                text = recipe.instructions,
-                fontSize = 14.sp,
-                color = Color.DarkGray,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Toggle favorite status
-            Button(
-                onClick = {
-                    val updatedRecipe = recipe.copy(isFavorite = !recipe.isFavorite)  // Toggle favorite status
-                    recipeViewModel.updateRecipe(updatedRecipe)
-                },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(if (recipe.isFavorite) "Remove from Favorites" else "Add to Favorites")
-            }
         }
     }
 }
+
 
 
 
