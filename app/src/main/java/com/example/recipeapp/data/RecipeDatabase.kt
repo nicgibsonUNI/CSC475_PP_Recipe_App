@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.delay
 
-@Database(entities = [RecipeEntity::class], version = 1, exportSchema = false)
+@Database(entities = [RecipeEntity::class], version = 3, exportSchema = false)
 abstract class RecipeDatabase : RoomDatabase() {
     abstract fun recipeDao(): RecipeDao
 
@@ -46,35 +46,38 @@ abstract class RecipeDatabase : RoomDatabase() {
         private suspend fun prepopulateRecipes(recipeDao: RecipeDao) {
             val recipes = listOf(
                 RecipeEntity(
-                    id = 1,
                     title = "Paleo Chicken Stir Fry",
                     description = "A healthy and quick stir fry using paleo-friendly ingredients.",
                     ingredients = "Chicken, Broccoli, Garlic, Olive Oil",
                     instructions = "1. Heat the pan...\n2. Cook the chicken...",
                     mealType = "Dinner",
-                    isFavorite = false
+                    isFavorite = false,
+                    imageUrl = "paleo_chicken_stir_fry"
                 ),
                 RecipeEntity(
-                    id = 2,
                     title = "Grilled Chicken Salad with Avocado",
                     description = "A refreshing salad with grilled chicken and creamy avocado.",
                     ingredients = "Chicken Breast, Avocado, Mixed Greens, Olive Oil",
                     instructions = "1. Season chicken breast and cook...\n2. Slice the grilled chicken...",
                     mealType = "Lunch",
-                    isFavorite = false
+                    isFavorite = false,
+                    imageUrl = "grilled_chicken_salad_with_avocado"
                 ),
                 RecipeEntity(
-                    id = 3,
                     title = "Coconut Chia Pudding",
-                    description = "Simple scrambled eggs with no additives.",
+                    description = "A creamy, nutrient-rich pudding made with coconut milk and chia seeds.",
                     ingredients = "Eggs, Butter, Salt",
                     instructions = "1. In a bowl, mix chia seeds...\n2.  Stir well and...",
                     mealType = "Breakfast",
-                    isFavorite = false
+                    isFavorite = false,
+                    imageUrl = "coconut_chia_pudding"
                 )
+
+
                 // Add more sample recipes
             )
             recipeDao.insertAll(recipes)
+            Log.d("RecipeDatabase", "Inserted ${recipes.size} recipes")
         }
     }
 }

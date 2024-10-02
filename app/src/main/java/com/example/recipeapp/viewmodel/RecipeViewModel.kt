@@ -35,5 +35,14 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     fun getRecipeById(recipeId: Int): LiveData<RecipeEntity?> {
         return repository.getRecipeById(recipeId).asLiveData()
     }
+
+    fun getRecipesByMealType(mealType: String): LiveData<List<RecipeEntity>> {
+        return repository.getRecipesByMealType(mealType).asLiveData()
+    }
+
+    fun getRandomRecipe(): LiveData<RecipeEntity?> {
+        return repository.getRandomRecipe().asLiveData()
+    }
+
 }
 

@@ -29,6 +29,22 @@ class RecipeRepository(private val recipeDao: RecipeDao) {
     fun getRecipeById(recipeId: Int): Flow<RecipeEntity?> {
         return recipeDao.getRecipeById(recipeId)
     }
+
+    // Get recipes by the meal type: 'breakfast', 'lunch', 'dinner'
+    fun getRecipesByMealType(mealType: String): Flow<List<RecipeEntity>> {
+        return recipeDao.getRecipesByMealType(mealType)
+    }
+
+    // Delete a recipe
+    suspend fun deleteRecipe(recipe: RecipeEntity) {
+        recipeDao.delete(recipe)
+    }
+
+    // Get random recipe for "Featured Recipe"
+    fun getRandomRecipe(): Flow<RecipeEntity?> {
+        return recipeDao.getRandomRecipe()
+    }
+
 }
 
 
