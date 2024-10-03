@@ -1,6 +1,5 @@
 package com.example.recipeapp.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,7 +17,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -31,7 +29,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.recipeapp.components.BottomNavigationBar
-import com.example.recipeapp.components.RecipeCard
 import com.example.recipeapp.components.SearchResultRecipeCard
 import com.example.recipeapp.viewmodel.RecipeViewModel
 
@@ -79,14 +76,14 @@ fun SearchScreen(navController: NavController, viewModel: RecipeViewModel, mealT
                 )
             )
 
-            // Get filtered recipes based on mealType
-            val filteredRecipes by viewModel.getRecipesByMealType(mealType).observeAsState(emptyList())
-
-            // Log the size of filteredRecipes
-            LaunchedEffect(filteredRecipes) {
-                Log.d("SearchScreen", "Number of recipes found for mealType $mealType: ${filteredRecipes.size}")
+            // Get filtered recipes based on search query if provided, else based on mealType
+            val filteredRecipes by if (searchQuery.text.isNotEmpty()) {
+                viewModel.getFilteredRecipes(searchQuery.text).observeAsState(emptyList())
+            } else {
+                viewModel.getRecipesByMealType(mealType).observeAsState(emptyList())
             }
 
+            // Display filtered Recipes
             LazyColumn {
                 items(filteredRecipes) { recipe ->
                     SearchResultRecipeCard(recipe = recipe) {

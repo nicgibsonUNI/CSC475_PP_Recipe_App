@@ -1,7 +1,7 @@
 package com.example.recipeapp.viewmodel
 
 import android.app.Application
-import android.util.Log
+
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
@@ -10,6 +10,9 @@ import com.example.recipeapp.data.RecipeDatabase
 import com.example.recipeapp.data.RecipeRepository
 import com.example.recipeapp.data.RecipeEntity
 import kotlinx.coroutines.launch
+import androidx.lifecycle.map
+
+
 
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: RecipeRepository
@@ -44,5 +47,12 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         return repository.getRandomRecipe().asLiveData()
     }
 
+    fun getFilteredRecipes(query: String): LiveData<List<RecipeEntity>> {
+        return allRecipes.map { recipeList ->
+            recipeList.filter { recipe ->
+                recipe.title.contains(query, ignoreCase = true)
+            }
+        }
+    }
 }
 
