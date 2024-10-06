@@ -25,7 +25,7 @@ fun BottomNavigationBar(navController: NavController) {
     BottomAppBar(
         modifier = Modifier.height(60.dp),
         contentPadding = PaddingValues(horizontal = 16.dp),
-        containerColor = MaterialTheme.colorScheme.surface, // Use surface color from the theme
+        containerColor = MaterialTheme.colorScheme.primary,
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -62,15 +62,6 @@ fun BottomNavigationBar(navController: NavController) {
                 Icon(
                     imageVector = Icons.Default.Person,
                     contentDescription = "Profile",
-                    modifier = Modifier.size(30.dp),
-                    tint = MaterialTheme.colorScheme.onSurface
-                )
-            }
-
-            IconButton(onClick = { navController.navigate("search") }) {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = "Search",
                     modifier = Modifier.size(30.dp),
                     tint = MaterialTheme.colorScheme.onSurface
                 )

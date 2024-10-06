@@ -22,12 +22,13 @@ fun SearchResultRecipeCard(recipe: RecipeEntity, onClick: () -> Unit) {
             .clickable(onClick = onClick),
         elevation = CardDefaults.elevatedCardElevation(4.dp),
         shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface) // Use surface color from the theme
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.onSurface) // Use surface color from the theme
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            // Updated to use rememberAsyncImagePainter
+            // Image component commented out, possibly put back later
+            /*
             Image(
                 painter = rememberAsyncImagePainter(model = recipe.imageUrl),
                 contentDescription = recipe.title,
@@ -37,12 +38,13 @@ fun SearchResultRecipeCard(recipe: RecipeEntity, onClick: () -> Unit) {
                     .clip(RoundedCornerShape(8.dp)), // Ensure rounded corners for the image as well
                 contentScale = ContentScale.Crop
             )
+            */
 
             // Recipe title
             Text(
                 text = recipe.title,
                 style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.colorScheme.onSurface, // Use onSurface color for the text
+                color = MaterialTheme.colorScheme.primary, // Ensure correct text color
                 modifier = Modifier.padding(top = 8.dp)
             )
 
@@ -50,11 +52,12 @@ fun SearchResultRecipeCard(recipe: RecipeEntity, onClick: () -> Unit) {
             Text(
                 text = recipe.description,
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurface, // Use onSurface color for the text
+                color = MaterialTheme.colorScheme.secondary, // Ensure correct text color
                 modifier = Modifier.padding(top = 4.dp)
             )
         }
     }
 }
+
 
 

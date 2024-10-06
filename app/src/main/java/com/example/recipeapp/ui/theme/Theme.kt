@@ -13,11 +13,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.graphics.Color
 
 // Earthy tones
-val EarthyGreen = Color(0xFF7B8D42)
+val EarthyGreen = Color(0xFF6E9827)
 val SoftBrown = Color(0xFF8C6E58)
 val PaleCream = Color(0xFFF5E9DC)
 val SoftOrange = Color(0xFFF4A261)
 val DeepBrown = Color(0xFF3E2723)
+val PureWhite = Color(0xFFFFFFFF)
 
 
 
@@ -46,7 +47,7 @@ private val LightColorScheme = lightColorScheme(
     onSecondary = DeepBrown,
     onTertiary = DeepBrown,
     onBackground = DeepBrown,
-    onSurface = DeepBrown,
+    onSurface = PureWhite,
     secondaryContainer = SoftBrown,
     onSecondaryContainer = DeepBrown
 )
@@ -54,7 +55,7 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun RecipeAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

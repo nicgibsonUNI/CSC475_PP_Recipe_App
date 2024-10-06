@@ -22,8 +22,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.recipeapp.components.BottomNavigationBar
+import androidx.compose.ui.graphics.Color
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TopAppBarDefaults
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,10 +32,20 @@ fun ProfileScreen(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Profile", style = MaterialTheme.typography.titleLarge) }
+                title = {
+                    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                        Text(
+                            text = "Profile",
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.onPrimary  // Use DeepBrown
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.Transparent  // Remove green background
+                )
             )
         },
-        bottomBar = { BottomNavigationBar(navController) }  // Bottom navigation bar included
     ) { paddingValues ->
         Column(
             modifier = Modifier

@@ -38,9 +38,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.recipeapp.components.BottomNavigationBar
 import com.example.recipeapp.utils.getDrawableId
 import com.example.recipeapp.viewmodel.RecipeViewModel
 
@@ -53,151 +51,143 @@ fun RecipeAppHomeScreen(navController: NavController, recipeViewModel: RecipeVie
     val randomRecipe by recipeViewModel.getRandomRecipe().observeAsState()
 
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController) }
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            // App title
-            Text(
-                text = "Ancestral Recipe and Cooking App",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-
-            // Search Bar for recipes
-            var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
-
-            TextField(
-                value = searchQuery,
-                onValueChange = { newQuery: TextFieldValue -> searchQuery = newQuery },
-                placeholder = { Text(text = "Search for recipes...") },
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = "Search Icon"
-                    )
-                },
+        content = { paddingValues ->  // Padding values are provided by Scaffold
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                shape = MaterialTheme.shapes.medium,
-                singleLine = true,
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-                    unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
-                )
-            )
-
-            // Meal Type Buttons
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                    .fillMaxSize()
+                    .padding(paddingValues)  // Apply scaffold padding
+                    .padding(16.dp),  // Additional padding for inner content
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Button(
-                    onClick = { navController.navigate("searchResults/Breakfast") },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary
-                    )
-                ) {
-                    Text("Breakfast")
-                }
-                Button(
-                    onClick = { navController.navigate("searchResults/Lunch") },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary
-                    )
-                ) {
-                    Text("Lunch")
-                }
-                Button(
-                    onClick = { navController.navigate("searchResults/Dinner") },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary
-                    )
-                ) {
-                    Text("Dinner")
-                }
-            }
+                // Search Bar for recipes
+                var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
 
-
-            // Display random featured recipe
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                if (randomRecipe != null) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        // "Featured Recipe" title
-                        Text(
-                            text = "Featured Recipe",
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.padding(bottom = 8.dp)
+                TextField(
+                    value = searchQuery,
+                    onValueChange = { newQuery: TextFieldValue -> searchQuery = newQuery },
+                    placeholder = { Text(text = "Search for recipes...") },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = "Search Icon"
                         )
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
+                    shape = MaterialTheme.shapes.medium,
+                    singleLine = true,
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = MaterialTheme.colorScheme.onSurface,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.onSurface,
+                        unfocusedIndicatorColor = Color.Transparent
+                    )
+                )
 
-                        // Card to display Recipe details
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp)
-                                .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
-                                .clickable {
-                                    // Navigate to the recipe detail screen
-                                    navController.navigate("recipeDetail/${randomRecipe!!.id}")
-                                },
-                            elevation = CardDefaults.elevatedCardElevation(4.dp),
-                            shape = RoundedCornerShape(8.dp)
-                        ) {
-                            Column(
-                                modifier = Modifier.padding(16.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally
+                // Meal Type Buttons
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Button(
+                        onClick = { navController.navigate("searchResults/Breakfast") },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onSurface
+                        )
+                    ) {
+                        Text("Breakfast")
+                    }
+                    Button(
+                        onClick = { navController.navigate("searchResults/Lunch") },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onSurface
+                        )
+                    ) {
+                        Text("Lunch")
+                    }
+                    Button(
+                        onClick = { navController.navigate("searchResults/Dinner") },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onSurface
+                        )
+                    ) {
+                        Text("Dinner")
+                    }
+                }
+
+                // Display random featured recipe
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (randomRecipe != null) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            // "Featured Recipe" title
+                            Text(
+                                text = "Featured Recipe",
+                                style = MaterialTheme.typography.titleMedium,
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            )
+
+                            // Card to display Recipe details
+                            Card(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp)
+                                    .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
+                                    .clickable {
+                                        // Navigate to the recipe detail screen
+                                        navController.navigate("recipeDetail/${randomRecipe!!.id}")
+                                    },
+                                elevation = CardDefaults.elevatedCardElevation(4.dp),
+                                shape = RoundedCornerShape(8.dp),
+                                colors = CardDefaults.cardColors(containerColor = Color.White)
                             ) {
-                                // Recipe Image
-                                Image(
-                                    painter = painterResource(
-                                        id = getDrawableId(randomRecipe!!.imageUrl, context)
-                                    ),
-                                    contentDescription = randomRecipe!!.title,
-                                    modifier = Modifier
-                                        .size(400.dp)
-                                        .clip(RoundedCornerShape(8.dp))
-                                )
+                                Column(
+                                    modifier = Modifier.padding(16.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    // Recipe Image
+                                    Image(
+                                        painter = painterResource(
+                                            id = getDrawableId(randomRecipe!!.imageUrl, context)
+                                        ),
+                                        contentDescription = randomRecipe!!.title,
+                                        modifier = Modifier
+                                            .size(400.dp)
+                                            .clip(RoundedCornerShape(8.dp))
+                                    )
 
-                                // Recipe Title
-                                Text(
-                                    text = randomRecipe!!.title,
-                                    style = MaterialTheme.typography.titleMedium,
-                                    color = MaterialTheme.colorScheme.primary,
-                                    modifier = Modifier.padding(top = 8.dp)
-                                )
+                                    // Recipe Title
+                                    Text(
+                                        text = randomRecipe!!.title,
+                                        style = MaterialTheme.typography.titleMedium,
+                                        color = MaterialTheme.colorScheme.primary,
+                                        modifier = Modifier.padding(top = 8.dp)
+                                    )
 
-                                // Recipe Description
-                                Text(
-                                    text = randomRecipe!!.description,
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.secondary,
-                                    modifier = Modifier.padding(top = 4.dp)
-                                )
+                                    // Recipe Description
+                                    Text(
+                                        text = randomRecipe!!.description,
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.secondary,
+                                        modifier = Modifier.padding(top = 4.dp)
+                                    )
+                                }
                             }
                         }
+                    } else {
+                        Text("Loading featured recipe...", style = MaterialTheme.typography.bodyMedium)
                     }
-                } else {
-                    Text("Loading featured recipe...", style = MaterialTheme.typography.bodyMedium)
                 }
             }
         }
-    }
+    )
 }
+

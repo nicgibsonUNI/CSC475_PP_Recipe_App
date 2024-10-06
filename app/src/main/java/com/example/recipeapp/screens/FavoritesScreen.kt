@@ -1,6 +1,7 @@
 package com.example.recipeapp.screens
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -25,8 +27,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.recipeapp.components.BottomNavigationBar
 import com.example.recipeapp.viewmodel.RecipeViewModel
+import androidx.compose.ui.graphics.Color
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,10 +39,20 @@ fun FavoritesScreen(recipeViewModel: RecipeViewModel, navController: NavControll
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Favorites", style = MaterialTheme.typography.titleLarge) }
+                title = {
+                    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                        Text(
+                            text = "Favorites",
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.onPrimary  // Use DeepBrown
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.Transparent  // Remove green background
+                )
             )
         },
-        bottomBar = { BottomNavigationBar(navController) }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -100,3 +113,5 @@ fun FavoritesScreen(recipeViewModel: RecipeViewModel, navController: NavControll
         }
     }
 }
+
+

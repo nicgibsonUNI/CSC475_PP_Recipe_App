@@ -8,14 +8,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -28,23 +26,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.recipeapp.components.BottomNavigationBar
 import com.example.recipeapp.components.SearchResultRecipeCard
 import com.example.recipeapp.viewmodel.RecipeViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(navController: NavController, viewModel: RecipeViewModel, mealType: String) {
     var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Search Recipes", style = MaterialTheme.typography.titleMedium) }
-            )
-        },
-        bottomBar = { BottomNavigationBar(navController) }
-    ) { paddingValues ->
+    Scaffold { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -70,8 +59,10 @@ fun SearchScreen(navController: NavController, viewModel: RecipeViewModel, mealT
                 shape = MaterialTheme.shapes.medium,
                 singleLine = true,
                 colors = TextFieldDefaults.colors(
-                    focusedContainerColor = MaterialTheme.colorScheme.surface,
-                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                    focusedContainerColor = MaterialTheme.colorScheme.onSurface,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.onSurface,
+                    focusedTextColor = Color.Black,
+                    unfocusedTextColor = Color.Black,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
                 )
@@ -95,4 +86,3 @@ fun SearchScreen(navController: NavController, viewModel: RecipeViewModel, mealT
         }
     }
 }
-

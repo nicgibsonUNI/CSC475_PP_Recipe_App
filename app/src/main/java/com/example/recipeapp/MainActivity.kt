@@ -3,6 +3,8 @@ package com.example.recipeapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -17,6 +19,9 @@ import com.example.recipeapp.screens.RecipeDetailScreen
 import com.example.recipeapp.screens.SearchScreen
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import com.example.recipeapp.components.BottomNavigationBar
+import com.example.recipeapp.components.TopBar
 import com.example.recipeapp.ui.theme.RecipeAppTheme
 
 
@@ -35,56 +40,68 @@ fun MainActivityContent() {
         val navController = rememberNavController()
         val recipeViewModel: RecipeViewModel = viewModel()
 
-        NavHost(navController = navController, startDestination = "home") {
-            // Home Screen
-            composable("home") {
-                RecipeAppHomeScreen(navController, recipeViewModel)
-            }
-
-            // Recipe Detail Screen
-            composable(
-                route = "recipeDetail/{recipeId}",
-                arguments = listOf(navArgument("recipeId") { type = NavType.IntType })
-            ) { backStackEntry ->
-                val recipeId = backStackEntry.arguments?.getInt("recipeId")
-
-                if (recipeId != null) {
-                    RecipeDetailScreen(
-                        recipeId = recipeId,
-                        recipeViewModel = recipeViewModel,
-                        navController = navController
-                    )
-                } else {
-                    // Handle the case where recipeId is null (Optional)
-                    Text("Error: Recipe not found")
+        Scaffold(
+            topBar = { TopBar() },  // TopBar Composable
+            bottomBar = { BottomNavigationBar(navController) }, // Optional Bottom Navigation Bar
+        ) { innerPadding ->
+            // Apply padding from the scaffold
+            NavHost(
+                navController = navController,
+                startDestination = "home",
+                modifier = Modifier.padding(innerPadding)  // Ensure NavHost respects padding
+            ) {
+                // Home Screen
+                composable("home") {
+                    RecipeAppHomeScreen(navController, recipeViewModel)
                 }
-            }
 
-            // Generic Search function
-            composable("search") {
-                SearchScreen(navController, recipeViewModel, "All")  // Default mealType is "All"
-            }
-
-            // Search function for mealType buttons
-            composable("searchResults/{mealType}") { backStackEntry ->
-                val mealType = backStackEntry.arguments?.getString("mealType")
-                if (mealType != null) {
-                    SearchScreen(navController, viewModel = recipeViewModel, mealType = mealType)
+                // Recipe Detail Screen
+                composable(
+                    route = "recipeDetail/{recipeId}",
+                    arguments = listOf(navArgument("recipeId") { type = NavType.IntType })
+                ) { backStackEntry ->
+                    val recipeId = backStackEntry.arguments?.getInt("recipeId")
+                    if (recipeId != null) {
+                        RecipeDetailScreen(
+                            recipeId = recipeId,
+                            recipeViewModel = recipeViewModel,
+                            navController = navController
+                        )
+                    } else {
+                        Text("Error: Recipe not found")
+                    }
                 }
-            }
 
-            // Favorite Screen
-            composable("favorites") {
-                FavoritesScreen(recipeViewModel, navController)
-            }
+                // Search Screen
+                composable("search") {
+                    SearchScreen(navController, recipeViewModel, "All")  // Default mealType is "All"
+                }
 
-            // Profile Screen
-            composable("profile") {
-                ProfileScreen(navController)
+                // Search function for mealType buttons
+                composable("searchResults/{mealType}") { backStackEntry ->
+                    val mealType = backStackEntry.arguments?.getString("mealType")
+                    if (mealType != null) {
+                        SearchScreen(navController, recipeViewModel, mealType)
+                    }
+                }
+
+                // Favorite Screen
+                composable("favorites") {
+                    FavoritesScreen(recipeViewModel, navController)
+                }
+
+                // Profile Screen
+                composable("profile") {
+                    ProfileScreen(navController)
+                }
             }
         }
     }
 }
+
+
+
+
 
 
 

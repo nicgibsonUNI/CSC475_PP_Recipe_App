@@ -66,18 +66,24 @@ fun RecipeDetailScreen(recipeId: Int?, recipeViewModel: RecipeViewModel, navCont
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Recipe Details", style = MaterialTheme.typography.titleMedium) },
+                title = {
+                    Text(
+                    "Back",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onPrimary  // Set title color
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = "Back",
+                            tint = MaterialTheme.colorScheme.onPrimary  // Set back arrow color
                         )
                     }
                 }
             )
         },
-        bottomBar = { BottomNavigationBar(navController) }
     ) { paddingValues ->
         Column(
             modifier = Modifier
