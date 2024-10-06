@@ -25,7 +25,7 @@ fun BottomNavigationBar(navController: NavController) {
     BottomAppBar(
         modifier = Modifier.height(60.dp),
         contentPadding = PaddingValues(horizontal = 16.dp),
-        containerColor = MaterialTheme.colorScheme.primary,
+        containerColor = MaterialTheme.colorScheme.surface, // Use surface color from the theme
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -35,7 +35,8 @@ fun BottomNavigationBar(navController: NavController) {
                 Icon(
                     imageVector = Icons.Default.Home,
                     contentDescription = "Home",
-                    modifier = Modifier.size(30.dp)
+                    modifier = Modifier.size(30.dp),
+                    tint = MaterialTheme.colorScheme.onSurface  // Use onSurface color for icons
                 )
             }
 
@@ -43,7 +44,8 @@ fun BottomNavigationBar(navController: NavController) {
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = "Search",
-                    modifier = Modifier.size(30.dp)
+                    modifier = Modifier.size(30.dp),
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
 
@@ -51,7 +53,8 @@ fun BottomNavigationBar(navController: NavController) {
                 Icon(
                     imageVector = Icons.Default.Star,
                     contentDescription = "Favorites",
-                    modifier = Modifier.size(30.dp)
+                    modifier = Modifier.size(30.dp),
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
 
@@ -59,7 +62,8 @@ fun BottomNavigationBar(navController: NavController) {
                 Icon(
                     imageVector = Icons.Default.Person,
                     contentDescription = "Profile",
-                    modifier = Modifier.size(30.dp)
+                    modifier = Modifier.size(30.dp),
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
 
@@ -67,7 +71,8 @@ fun BottomNavigationBar(navController: NavController) {
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = "Search",
-                    modifier = Modifier.size(30.dp)
+                    modifier = Modifier.size(30.dp),
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
         }

@@ -14,6 +14,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -22,9 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.recipeapp.components.BottomNavigationBar
 import com.example.recipeapp.viewmodel.RecipeViewModel
@@ -37,7 +36,7 @@ fun FavoritesScreen(recipeViewModel: RecipeViewModel, navController: NavControll
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Favorites") }
+                title = { Text("Favorites", style = MaterialTheme.typography.titleLarge) }
             )
         },
         bottomBar = { BottomNavigationBar(navController) }
@@ -52,8 +51,8 @@ fun FavoritesScreen(recipeViewModel: RecipeViewModel, navController: NavControll
             if (favoriteRecipes.isEmpty()) {
                 Text(
                     text = "No favorite recipes yet.",
-                    fontSize = 20.sp,
-                    color = Color.Gray,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier.padding(16.dp)
                 )
             } else {
@@ -69,8 +68,16 @@ fun FavoritesScreen(recipeViewModel: RecipeViewModel, navController: NavControll
                             elevation = CardDefaults.elevatedCardElevation(4.dp)
                         ) {
                             Column(modifier = Modifier.padding(16.dp)) {
-                                Text(text = recipe.title, fontSize = 18.sp, color = Color.Black)
-                                Text(text = recipe.description, fontSize = 14.sp, color = Color.Gray)
+                                Text(
+                                    text = recipe.title,
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                                Text(
+                                    text = recipe.description,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onBackground
+                                )
 
                                 // Button to toggle favorite status
                                 IconButton(
@@ -82,7 +89,7 @@ fun FavoritesScreen(recipeViewModel: RecipeViewModel, navController: NavControll
                                     Icon(
                                         imageVector = Icons.Default.Star,
                                         contentDescription = "Remove from Favorites",
-                                        tint = Color.Yellow
+                                        tint = MaterialTheme.colorScheme.secondary
                                     )
                                 }
                             }

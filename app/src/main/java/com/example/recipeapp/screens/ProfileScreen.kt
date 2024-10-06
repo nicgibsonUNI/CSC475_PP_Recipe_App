@@ -20,11 +20,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.recipeapp.components.BottomNavigationBar
+import androidx.compose.material3.MaterialTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,7 +31,7 @@ fun ProfileScreen(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Profile") }
+                title = { Text("Profile", style = MaterialTheme.typography.titleLarge) }
             )
         },
         bottomBar = { BottomNavigationBar(navController) }  // Bottom navigation bar included
@@ -48,8 +47,8 @@ fun ProfileScreen(navController: NavController) {
             // User Information Section
             Text(
                 text = "Welcome, User",
-                fontSize = 24.sp,
-                color = Color.Black,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
@@ -58,13 +57,13 @@ fun ProfileScreen(navController: NavController) {
                 modifier = Modifier
                     .size(100.dp)
                     .padding(16.dp)
-                    .background(Color.Gray, shape = CircleShape),
+                    .background(MaterialTheme.colorScheme.secondary, shape = CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = "User",
-                    color = Color.White,
-                    fontSize = 20.sp
+                    color = MaterialTheme.colorScheme.onSecondary,
+                    style = MaterialTheme.typography.titleMedium
                 )
             }
 
@@ -75,9 +74,10 @@ fun ProfileScreen(navController: NavController) {
                 onClick = {
                     // Handle clear favorites logic here (e.g., call viewModel to reset favorites)
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
             ) {
-                Text("Clear Favorites")
+                Text("Clear Favorites", color = MaterialTheme.colorScheme.onPrimary)
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -87,9 +87,10 @@ fun ProfileScreen(navController: NavController) {
                 onClick = {
                     // Handle future preferences or settings logic
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
             ) {
-                Text("App Settings (Coming Soon)")
+                Text("App Settings (Coming Soon)", color = MaterialTheme.colorScheme.onPrimary)
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -100,9 +101,9 @@ fun ProfileScreen(navController: NavController) {
                     // Handle logout or exit functionality
                 },
                 modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(Color.Red)
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.error)
             ) {
-                Text("Logout")
+                Text("Logout", color = MaterialTheme.colorScheme.onError)
             }
         }
     }

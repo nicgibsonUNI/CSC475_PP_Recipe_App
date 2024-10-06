@@ -2,6 +2,7 @@ package com.example.recipeapp.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -60,10 +62,11 @@ fun RecipeAppHomeScreen(navController: NavController, recipeViewModel: RecipeVie
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // App title
             Text(
                 text = "Ancestral Recipe and Cooking App",
-                fontSize = 24.sp,
-                color = Color.Black,
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
@@ -86,8 +89,8 @@ fun RecipeAppHomeScreen(navController: NavController, recipeViewModel: RecipeVie
                 shape = MaterialTheme.shapes.medium,
                 singleLine = true,
                 colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.LightGray,
-                    unfocusedContainerColor = Color.LightGray,
+                    focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
                 )
@@ -98,39 +101,51 @@ fun RecipeAppHomeScreen(navController: NavController, recipeViewModel: RecipeVie
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Button(onClick = {
-                    navController.navigate("searchResults/Breakfast")
-                }) {
+                Button(
+                    onClick = { navController.navigate("searchResults/Breakfast") },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
+                    )
+                ) {
                     Text("Breakfast")
                 }
-                Button(onClick = {
-                    navController.navigate("searchResults/Lunch")
-                }) {
+                Button(
+                    onClick = { navController.navigate("searchResults/Lunch") },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
+                    )
+                ) {
                     Text("Lunch")
                 }
-                Button(onClick = {
-                    navController.navigate("searchResults/Dinner")
-                }) {
+                Button(
+                    onClick = { navController.navigate("searchResults/Dinner") },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
+                    )
+                ) {
                     Text("Dinner")
                 }
             }
+
 
             // Display random featured recipe
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    //  .height(300.dp)
                     .padding(top = 16.dp),
                 contentAlignment = Alignment.Center
             ) {
                 if (randomRecipe != null) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        // "Featured Recipe" title above  recipe
+                        // "Featured Recipe" title
                         Text(
                             text = "Featured Recipe",
-                            fontSize = 20.sp,
-                            color = Color.Black,
-                            modifier = Modifier.padding(bottom = 8.dp)  // Add some spacing between the text and the card
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.padding(bottom = 8.dp)
                         )
 
                         // Card to display Recipe details
@@ -138,8 +153,12 @@ fun RecipeAppHomeScreen(navController: NavController, recipeViewModel: RecipeVie
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(16.dp)
-                                .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
-                            elevation = CardDefaults.elevatedCardElevation(4.dp), // Fix for the elevation
+                                .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
+                                .clickable {
+                                    // Navigate to the recipe detail screen
+                                    navController.navigate("recipeDetail/${randomRecipe!!.id}")
+                                },
+                            elevation = CardDefaults.elevatedCardElevation(4.dp),
                             shape = RoundedCornerShape(8.dp)
                         ) {
                             Column(
@@ -149,10 +168,7 @@ fun RecipeAppHomeScreen(navController: NavController, recipeViewModel: RecipeVie
                                 // Recipe Image
                                 Image(
                                     painter = painterResource(
-                                        id = getDrawableId(
-                                            randomRecipe!!.imageUrl,
-                                            context
-                                        )
+                                        id = getDrawableId(randomRecipe!!.imageUrl, context)
                                     ),
                                     contentDescription = randomRecipe!!.title,
                                     modifier = Modifier
@@ -163,23 +179,23 @@ fun RecipeAppHomeScreen(navController: NavController, recipeViewModel: RecipeVie
                                 // Recipe Title
                                 Text(
                                     text = randomRecipe!!.title,
-                                    fontSize = 20.sp,
-                                    color = Color.Black,
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier.padding(top = 8.dp)
                                 )
 
                                 // Recipe Description
                                 Text(
                                     text = randomRecipe!!.description,
-                                    fontSize = 16.sp,
-                                    color = Color.Gray,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.secondary,
                                     modifier = Modifier.padding(top = 4.dp)
                                 )
                             }
                         }
                     }
                 } else {
-                    Text("Loading featured recipe...")
+                    Text("Loading featured recipe...", style = MaterialTheme.typography.bodyMedium)
                 }
             }
         }

@@ -40,7 +40,7 @@ fun SearchScreen(navController: NavController, viewModel: RecipeViewModel, mealT
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Search Recipes") }
+                title = { Text("Search Recipes", style = MaterialTheme.typography.titleMedium) }
             )
         },
         bottomBar = { BottomNavigationBar(navController) }
@@ -56,11 +56,12 @@ fun SearchScreen(navController: NavController, viewModel: RecipeViewModel, mealT
             TextField(
                 value = searchQuery,
                 onValueChange = { newQuery: TextFieldValue -> searchQuery = newQuery },
-                placeholder = { Text(text = "Search recipes...") },
+                placeholder = { Text(text = "Search recipes...", style = MaterialTheme.typography.bodySmall) },
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Search,
-                        contentDescription = "Search Icon"
+                        contentDescription = "Search Icon",
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 },
                 modifier = Modifier
@@ -69,8 +70,8 @@ fun SearchScreen(navController: NavController, viewModel: RecipeViewModel, mealT
                 shape = MaterialTheme.shapes.medium,
                 singleLine = true,
                 colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.LightGray,
-                    unfocusedContainerColor = Color.LightGray,
+                    focusedContainerColor = MaterialTheme.colorScheme.surface,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
                 )
@@ -94,3 +95,4 @@ fun SearchScreen(navController: NavController, viewModel: RecipeViewModel, mealT
         }
     }
 }
+
